@@ -6,6 +6,9 @@ class Inicio
   {
     $inicio = new Template('view/inicio.html');
     $inicio->set('inicio', 'Olá seja bem vindo!!!');
-    return $inicio->saida();
+    $this->message =  $inicio->saida();
+  }
+  public function getMessage(){
+    return $this -> message;
   }
 }
