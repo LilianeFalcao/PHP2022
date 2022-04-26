@@ -23,7 +23,7 @@ class Crud{
             return false;
         }
     }
-    public function insert ($campos = null, $valroes = null){
+    public function insert ($campos = null, $valores = null){
         if(!$campos && !$valores){
             echo "Campos e valores não informados!";
             return false;

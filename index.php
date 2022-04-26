@@ -16,7 +16,7 @@ spl_autoload_register("classLoader");
 //front controller
 
 class Aplicacao{
-    public static $app = "/Lilianefalcao";
+    public static $app = "/LilianeFalcao";
     public static function run(){
         $layout = new Template("view/layout.html");
         if(isset($_GET["class"])){

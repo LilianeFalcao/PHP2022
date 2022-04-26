@@ -21,6 +21,7 @@ class Form
       $email = $conexao->quote($_POST['email']);
       $telefone = $conexao->quote($_POST['telefone']);
       $resultado = $contatos->insert("nome,email,telefone", "$nome, $email, $telefone");
+      Transaction::close();
     }catch(Exception $e){
       echo $e->getMessage();
     }
