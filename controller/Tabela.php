@@ -16,6 +16,19 @@ class Tabela
       $this->message = $tabela->saida();
     }
   }
+  public function remover(){
+    if (isset($_GET["id"])){
+      try{
+        $conexao = Transaction::get();
+        $id = $conexao->quote($_GET["id"]);
+        $contatos = new Crud("contatos");
+        $contatos->delete("id=$id");
+      }catch(Exeption $e){
+        echo $e->getMessage();
+      }
+    }
+  }
+
   public function getMessage()
   {
     return $this->message;
