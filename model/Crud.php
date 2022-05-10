@@ -2,6 +2,8 @@
 
 class Crud{
     private $tabela;
+    private $message =  "";
+    private $error = false;
     public function __construct($tabela){
         $this->tabela = $tabela;
     }
@@ -19,60 +21,84 @@ class Crud{
             }
             return $lista;
         }else{
-            echo "registro não encontrado!";
-            return false;
+            $this->message = "Nenhum registro encontrado!";
+            $this->error = true;
         }
     }
     public function insert ($campos = null, $valores = null){
-        if(!$campos && !$valores){
-            echo "Campos e valores não informados!";
-            return false;
-        }else{
-            $conexao = Transaction::get();
-            $sql = "INSERT INTO $this->tabela ($campos) VALUES ($valores)";
-            $resultado = $conexao->query($sql);
-            if ($resultado->rowCount() > 0) {
-              echo "Inserido com sucesso!";
-              return true;
-            } else {
-              echo "Erro ao inserir!";
-              return false;
+        try{
+            if(!$campos && !$valores){
+                $this->message = "Condição não informada!";
+                $this->error = true;
+            }else{
+                $conexao = Transaction::get();
+                $sql = "INSERT INTO $this->tabela ($campos) VALUES ($valores)";
+                $resultado = $conexao->query($sql);
+                if ($resultado->rowCount() > 0) {
+                    $this->message = "Inserido com sucesso!";
+                    $this->error = false;
+                } else {
+                    $this->message = "Erro ao inserir!";
+                    $this->error = true;
+                }
             }
+        }catch (Exception $e) {
+            $this->message = $e->getMessage();
+            $this->error = true;
         }
     }
     
     public function update($valores = NULL, $campos = NULL){
         if(!$valores || !$campos ){
-            echo "Valores ou condições não informados!";
-            return false;
+            $this->message = "Condição não informada!";
+            $this->error = true;
         }else{
+            try{
             $conexao = Transaction::get();
             $sql = "UPDATE $this->tabela SET $valores WHERE $campos";
             $resultado = $conexao->query($sql);
             if($resultado->rowCount() > 0){
-                echo "Atualizado com sucesso!";
-                return true;
+                $this->message = "Atualizado com sucesso!";
+                $this->error = false;
             }else{
-                echo "Erro ao atualizar!";
-                return false;
+                $this->message = "Erro ao atualizar!";
+                $this->error = true;
+            }
+            }catch(Exception $e){
+                $this->message = $e->getMessage();
+                $this->error = true;
             }
         }
     }
     public function delete($campos = NULL){
         if(!$campos){
-            echo "condição não informada!";
-            return false;
+            $this->message = "Condição não informada!";
+            $this->error = true;
         }else{
+            try{
             $conexao = Transaction::get();
             $sql = "DELETE FROM $this->tabela WHERE $campos";
             $resultado = $conexao->query($sql);
             if ($resultado->rowCount() > 0) {
-              echo "Excluído com sucesso!";
-              return true;
+                $this->message =  "Excluído com sucesso!";
+                $this->error = false;
             } else {
-              echo "Erro ao excluir!";
-              return false;
+                $this->message =  "Erro ao excluir!";
+                $this->error = true;
+            }
+            }catch(Exception $e){
+                $this->message = $e->getMessage();
+                $this->error = true;
             }
           }
         }
+
+    public function getMessage()
+    {
+        return $this->message;
     }
+    public function getError()
+    {
+        return $this->error;
+    }
+}

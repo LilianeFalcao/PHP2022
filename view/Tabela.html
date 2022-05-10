@@ -16,11 +16,13 @@
         <td>{telefone}</td>
         <td>
           <button type="button"
+          class="edit"
           onclick="location.href='?class=Form&method=editar&id={id}'"
           >Editar</button>
         </td>
         <td>
-          <button type="button" 
+          <button type="button"
+          class="remove" 
           onclick="if(confirm('Deseja realmente remover este item?')) location.href='?class=Tabela&method=remover&id={id}'" >Remover</button>
         </td>
       </tr>

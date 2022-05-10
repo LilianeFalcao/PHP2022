@@ -3,6 +3,7 @@
 class Form
 {
   private $message = "";
+  private $error = "";
 
   public function __construct(){
     Transaction::open();
