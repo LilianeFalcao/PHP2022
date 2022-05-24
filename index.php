@@ -3,7 +3,12 @@
 spl_autoload_extensions('.php');
 function classLoader($class)
 {
-  $pastas = array('controller', 'model');
+  $pastas = array(
+    "shared/controller",
+    "shared/model",
+    "public/controller",
+    "public/model",
+);
   foreach ($pastas as $pasta) {
     $arquivo = "{$pasta}/{$class}.php";
     if (file_exists($arquivo)) {
