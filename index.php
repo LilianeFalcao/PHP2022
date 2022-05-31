@@ -17,34 +17,36 @@ function classLoader($class)
   }
 }
 spl_autoload_register("classLoader");
+Session::startSession();
+Session::freeSession();
 
 //front controller
 
 class Aplicacao{
-    public static $app = "/LilianeFalcao";
-    public static function run(){
-        $layout = new Template("view/layout.html");
-        if(isset($_GET["class"])){
+  static public $app = "/lilianeF";
+  public static function run(){
+      $layout = new Template("public/view/layout.html");
+      $layout->set("uri", self::$app);
+      if(isset($_GET["class"])){
           $class = $_GET["class"];
-        }else{
-          $class = "Inicio";
-        }
-        if (isset($_GET["method"])) {
-          $method = $_GET["method"];
-        } else {
-          $method = "";
-        }
-        if(class_exists($class)){
-            $pagina = new $class();
-            if(method_exists($pagina, $method)) {
-              $pagina->$method();
-            } else {
-              $pagina->controller();
-            }
-            $layout->set("uri", self::$app);
-            $layout->set('conteudo', $pagina->getMessage());
-          }
-          echo $layout->saida();
-        }
+      }else {
+          $class = "Login";
       }
-      Aplicacao::run();
+      if(isset($_GET["method"])){
+          $method = $_GET["method"];
+      }else {
+          $method = "";
+      }
+      if(class_exists($class)){
+          $pagina = new $class;
+      if(method_exists($pagina, $method)) {
+          $pagina->$method();
+      }else{
+          $pagina->controller();
+      }
+      $layout->set("conteudo", $pagina->getMessage());
+  }
+      echo $layout->saida();
+  }
+}
+Aplicacao::run();

@@ -10,7 +10,7 @@ class Form
   }
   public function controller()
   {
-    $form = new Template("view/Form.html");
+    $form = new Template("restrict/view/Form.html");
     $form-> set("id", "");
     $form -> set("nome", "");
     $form -> set("email", "");

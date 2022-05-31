@@ -12,7 +12,7 @@ class Tabela
     Transaction::get();
     $contatos = new Crud("contatos");
     $resultado = $contatos->select();
-    $tabela = new Template("view/Tabela.html");
+    $tabela = new Template("restrict/view/Tabela.html");
     if (is_array($resultado)) {
       $tabela->set("linha", $resultado);
       $this->message = $tabela->saida();

@@ -46,7 +46,7 @@
                     $msg->set("cor", "success");
                 }
                 $msg->set("msg", $this->message);
-                $msg->set("uri", "/modelo/?class=Login");
+                $msg->set("uri", "/lilianeF/?class=Login");
                 return $msg->saida();    
             }    
         }
